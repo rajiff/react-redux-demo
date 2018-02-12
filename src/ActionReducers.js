@@ -1,16 +1,22 @@
-import { ADD_SKILL, REMOVE_SKILL } from './ActionTypes';
+import { GOT_SKILLS, ERROR_IN_REQUEST, ADD_SKILL, REMOVE_SKILL } from './ActionTypes';
 
 let initialState = {
-  skillColln: [
-    { name: 'C++', level: 'expert' },
-    { name: 'Java', level: 'amature' },
-    { name: 'Node.js', level: 'expert' },
-    { name: '.Net', level: 'dumb' },
-  ]
+  skillColln: [],
+  error: null
 }
 
 export default function(previousState = initialState, action) {
 	switch(action.type) {
+		case GOT_SKILLS: {
+			return Object.assign({}, previousState, {
+        skillColln: action.payload.skills
+      })
+		}
+		case ERROR_IN_REQUEST: {
+			return Object.assign({}, previousState, {
+        error: action.payload.error
+      })
+		}
 		case ADD_SKILL: {
 			let newSkill = action.payload.newSkill;
 

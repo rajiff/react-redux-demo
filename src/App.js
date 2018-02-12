@@ -13,15 +13,6 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    /*this.state = {
-      skillColln: [
-        {name: 'C++', level: 'expert'},
-        {name: 'Java', level: 'amature'},
-        {name: 'Node.js', level: 'expert'},
-        {name: '.Net', level: 'dumb'},
-      ]
-    }*/
-
     this.styles = {
       wrapperSkillProfile: {
         border: "1px solid teal",
@@ -38,16 +29,9 @@ class App extends Component {
     }
   }
 
-  /*onSkillRemove = (skillName) => {
-    console.log("Removing skill at APP ", skillName);
-    this.setState(prevState => {
-      let itemToRemove = prevState.skillColln.findIndex(s => s.name === skillName);
-
-      return {
-        skillColln: prevState.skillColln.filter((s, i) => i !== itemToRemove)
-      }
-    });
-  }*/
+  componentDidMount () {
+    this.props.onMount()
+  }
 
   render() {
     return (
@@ -79,6 +63,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    onMount: () => {
+      dispatch(Actions.onFetchSkills());
+    },
     onSkillRemove: (skillName) => {
       dispatch(Actions.onRemoveSkill(skillName));
     },
