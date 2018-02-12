@@ -1,0 +1,7 @@
+let ADD_SKILL = "ADD_SKILL";
+let REMOVE_SKILL = "REMOVE_SKILL";
+
+export {
+  ADD_SKILL,
+  REMOVE_SKILL
+}
