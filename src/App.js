@@ -56,6 +56,10 @@ class App extends Component {
           <SkillProfile skills={this.props.skillColln} onSkillRemove={this.props.onSkillRemove}/>
         </div>
 
+        <div  style={this.styles.wrapperSkillProfile}>
+            {JSON.stringify(this.props.gitUser)}
+        </div>
+
       </div>
     );
   }
@@ -63,6 +67,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    gitUser: state.gitUser,
     skillColln: state.skillColln,
     error: state.error
   }
@@ -72,6 +77,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onMount: () => {
       dispatch(Actions.onFetchSkills());
+      dispatch(Actions.onFetchGitUser());
     },
     onSkillRemove: (skillName) => {
       dispatch(Actions.onRemoveSkill(skillName));

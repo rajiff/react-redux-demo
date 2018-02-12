@@ -1,5 +1,6 @@
-import { GOT_SKILLS, ERROR_IN_REQUEST, ADD_SKILL, REMOVE_SKILL } from './ActionTypes';
+import { GOT_SKILLS, ERROR_IN_REQUEST, ADD_SKILL, REMOVE_SKILL, GOT_GIT_USER } from './ActionTypes';
 import request from 'superagent';
+import { GraphQLClient } from 'graphql-request';
 
 function onFetchSkills() {
   return function(dispatch) {
@@ -25,7 +26,36 @@ function onFetchSkills() {
       })
       .catch((err) => {
         // ERROR
-        dispatch(onErrorInRequest(`Request failed ${err}`));
+        dispatch(onErrorInRequest(`REST Request failed ${err}`));
+      })
+  }
+}
+
+function onFetchGitUser() {
+  return function(dispatch) {
+    const client = new GraphQLClient('https://api.github.com/graphql', {
+      headers: {
+        Authorization: 'Bearer a0fcdbb6475f60198ee789c6e27db98c719922f0',
+      },
+    });
+
+    let query = `{
+      user (login: "rajiff") {
+       name
+       repositories {
+         totalCount
+       }
+      }
+    }`;
+
+    client.request(query)
+      .then(data => {
+        // SUCCESS
+        dispatch(onGotGitUser(data.user));
+      })
+      .catch((err) => {
+        // ERROR
+        dispatch(onErrorInRequest(`GraphQL Request failed ${err}`));
       })
   }
 }
@@ -34,6 +64,15 @@ function onGotSkills(skills) {
   const action = {
     type: GOT_SKILLS,
     payload: { skills },
+    error: false
+  };
+  return action;
+}
+
+function onGotGitUser(user) {
+  const action = {
+    type: GOT_GIT_USER,
+    payload: { gitUser: user },
     error: false
   };
   return action;
@@ -75,6 +114,8 @@ export {
   onErrorInRequest,
   onAddNewSkill,
   onRemoveSkill,
+  onFetchGitUser,
+  onGotGitUser
   // dispatchAddSkill,
   // dispatchRemoveSkill
 }

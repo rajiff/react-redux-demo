@@ -9,16 +9,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-
-const client = new ApolloClient({
-  link: new HttpLink({ uri: '/' }),
-  cache: new InMemoryCache()
-});
-
 // Enhance the redux store with middleware (add a chain, between dispatching of action, and these actions reaching the reducers)
 let store = createStore(ActionReducers,
 		compose(
@@ -31,9 +21,7 @@ let store = createStore(ActionReducers,
 function render() {
 	return (
 		<Provider store={store}>
-			<ApolloProvider client={client}>
 				<App />
-			</ApolloProvider>
 		</Provider>
 	)
 }
