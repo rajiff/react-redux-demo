@@ -37,6 +37,12 @@ class App extends Component {
     return (
       <div style={this.styles.centerColumn}>
 
+        <div>
+        {
+          (this.props.error)?<div style={{border: "1px solid red", background: "#dcdcdc", width: '600px'}}><h3 style={{color:'red', margin: "20px"}}>{this.props.error}</h3></div>:''
+        }
+        </div>
+
         <div style={{display: "flex"}}>
           <div style={this.styles.wrapperSkillProfile}>
             <SkillSummary skills={this.props.skillColln}/>
@@ -57,7 +63,8 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    skillColln: state.skillColln
+    skillColln: state.skillColln,
+    error: state.error
   }
 }
 

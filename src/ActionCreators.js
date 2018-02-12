@@ -4,6 +4,7 @@ import request from 'superagent';
 function onFetchSkills() {
   return function(dispatch) {
     let url = "/skills";
+    // let url = "https://this-will-never-exists.com";
 
     // You can dispatch one action to inform, request is in progress
 
@@ -24,7 +25,7 @@ function onFetchSkills() {
       })
       .catch((err) => {
         // ERROR
-        dispatch(onErrorInRequest(err));
+        dispatch(onErrorInRequest(`Request failed ${err}`));
       })
   }
 }
